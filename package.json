@@ -1,0 +1,31 @@
+{
+  "name": "planetwatcher-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend for watching the Algorand blockchain for Planetwatch connectivity",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --trace-warnings server.js \"Planetwatcher\""
+  },
+  "author": "Adam Bennett",
+  "dependencies": {
+    "algosdk": "1.12.0",
+    "body-parser": "1.19.0",
+    "dotenv": "10.0.0",
+    "express": "4.17.1",
+    "express-session": "1.17.2",
+    "firebase": "9.6.0",
+    "firebase-admin": "10.0.0",
+    "moment": "^2.29.1",
+    "node-pre-gyp": "0.17.0",
+    "pg": "8.7.1",
+    "pg-hstore": "2.3.4",
+    "sequelize": "6.5.1",
+    "winston": "3.3.3",
+    "winston-daily-rotate-file": "4.5.5"
+  },
+  "devDependencies": {
+    "@types/express-session": "1.17.4",
+    "@types/sequelize": "4.28.10"
+  }
+}
