@@ -1,2 +1,13 @@
 # Project exclude paths
 /node_modules/
+/package-lock.json
+/run.cmd
+/core/.env
+/logs/
+/.idea/dataSources/
+/.idea/dataSources.local.xml
+/.idea/dataSources.xml
+/.idea/discord.xml
+/.idea/jsLibraryMappings.xml
+/.idea/workspace.xml
+/.idea/sqldialects.xml

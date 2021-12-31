@@ -5,7 +5,9 @@
   "description": "Backend for watching the Algorand blockchain for Planetwatch connectivity",
   "main": "server.js",
   "scripts": {
-    "start": "node --trace-warnings server.js \"Planetwatcher\""
+    "start": "node --trace-warnings server.js \"Planetwatcher\"",
+    "generate": "node core/envGenerator.js",
+    "generate-env": "npm run generate \"{\\\"dbUser\\\":\\\"postgres\\\", \\\"dbPass\\\":\\\"root\\\" }\""
   },
   "author": "Adam Bennett",
   "dependencies": {

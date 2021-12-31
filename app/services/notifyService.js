@@ -1,6 +1,5 @@
 const logger = require('./logService');
 const Model = require('../../core/model');
-
 const admin = require("firebase-admin");
 admin.initializeApp({ credential: admin.credential.applicationDefault() });
 
