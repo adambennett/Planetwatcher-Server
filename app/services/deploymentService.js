@@ -16,7 +16,8 @@ const databaseAutodeploy = () => {
                 address: wallet.address,
                 lastConnected: wallet.lastConnected,
                 lastConnectedFormatted: wallet.lastConnectedFormatted,
-                displayName: wallet.displayName
+                displayName: wallet.displayName,
+                phoneName: wallet.phoneName
             });
         }
         return model.NotificationToken.findAll();
@@ -27,7 +28,9 @@ const databaseAutodeploy = () => {
                 token: token.token,
                 platform: token.platform,
                 isEnabled: token.isEnabled,
-                sendStillConnected: token.sendStillConnected
+                sendStillConnected: token.sendStillConnected,
+                notificationInterval: token.notificationInterval,
+                lastSent: token.lastSent
             });
         }
         return model.WalletWatch.findAll();
