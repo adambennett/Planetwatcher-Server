@@ -64,11 +64,12 @@ const txCheckLogic = async (wallet) => {
 const sendGoodNotification = async (wallet) => {
     const updatedWallet = await Model.Wallet.findOne({ where: { id: wallet.id }});
     await notificationManager.sendNotificationToUsersDevices('Good', updatedWallet);
+    logger.info(`${wallet.displayName} is all good.`, { func: 'app/services/algoService.sendGoodNotification()'});
 }
 
 const getLatestWalletTx = async (wallet) => {
-    const { startYear, startMonth, startDay, startHour, startMinute } = formatStartTime(wallet);
-    const startTime = createStartTime(startYear, startMonth, startDay, startHour, startMinute);
+    const { startYear, startMonth, startDay } = formatStartTime(wallet);
+    const startTime = createStartTime(startYear, startMonth, startDay);
     let response;
     try {
         response = await indexerClient.searchForTransactions()
@@ -113,15 +114,11 @@ const formatStartTime = (wallet) => {
     if (startDay.toString().length < 2) {
         startDay = "0" + startDay;
     }
-    let startHour = wallet.lastConnected ? (new Date(wallet.lastConnected * 1000).getHours()) : "15";
-    if (startHour.toString().length < 2) {
-        startHour = "0" + startHour;
-    }
-    const startMinute = wallet.lastConnected ? (new Date(wallet.lastConnected * 1000).getMinutes()) : "00";
-    return { startYear, startMonth, startDay, startHour, startMinute };
+    return { startYear, startMonth, startDay };
 }
 
-const createStartTime = (year, month, day, hour, minute) => {
+const createStartTime = (year, month, day) => {
+    month = month < 10 ? `0${month}` : month;
     return `${year}-${month}-${day}`;
 }
 

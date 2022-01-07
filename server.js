@@ -18,7 +18,7 @@ app.use(jsonParser);
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 app.use('/', router);
-app.use('*', (req, res) => { res.status(404).send('Route not found!'); });
+app.use('*', (req, res) => { res.status(404).send('PLANETWATCHER SERVER<br><br>Route not found!'); });
 
 databaseService.databaseAutodeploy();
 algoService.algoWatcher();
