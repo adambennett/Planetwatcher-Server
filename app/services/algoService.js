@@ -38,6 +38,17 @@ const checkForTransactions = async () => {
 const txCheckLogic = async (wallet) => {
     const latestTx = await getLatestWalletTx(wallet);
     if (latestTx) {
+        if (latestTx.error) {
+            const lastWalletConnect = wallet.lastConnected ? new Date(wallet.lastConnected) : null;
+            let hoursSinceLastStream = 'An unknown amount of';
+            if (lastWalletConnect) {
+                const now = new Date();
+                const difference = now.getHours() - lastWalletConnect.getHours();
+                hoursSinceLastStream = difference > 0 ? difference : hoursSinceLastStream;
+            }
+            await notificationManager.sendNotificationToUsersDevices( 'Warning', wallet, hoursSinceLastStream);
+            return;
+        }
         const lastConnected = latestTx.timestamp;
         if (wallet.lastConnected == null || lastConnected >= wallet.lastConnected) {
             const update = { lastConnected, lastConnectedFormatted: latestTx.time };
@@ -51,9 +62,14 @@ const txCheckLogic = async (wallet) => {
             if (difference > 1) {
                 await notificationManager.sendNotificationToUsersDevices( 'Warning', wallet, difference);
             } else {
+                logger.info(`Wallet check for ${wallet.displayName} was normal. No warning sent. Last Connected: ${wallet.lastConnectedFormatted}`, {
+                    func: 'services/algoService.txCheckLogic()',
+                    notes: `There was a ${difference} hour difference in time between wallet last connected and the time of this check.`,
+                });
                 await sendGoodNotification(wallet);
             }
         } else {
+            logger.info(`Wallet check for ${wallet.displayName} was normal. No warning sent.`, {func: 'services/algoService.txCheckLogic()'});
             await sendGoodNotification(wallet);
         }
     } else {
@@ -64,7 +80,6 @@ const txCheckLogic = async (wallet) => {
 const sendGoodNotification = async (wallet) => {
     const updatedWallet = await Model.Wallet.findOne({ where: { id: wallet.id }});
     await notificationManager.sendNotificationToUsersDevices('Good', updatedWallet);
-    logger.info(`${wallet.displayName} is all good.`, { func: 'app/services/algoService.sendGoodNotification()'});
 }
 
 const getLatestWalletTx = async (wallet) => {
@@ -77,7 +92,7 @@ const getLatestWalletTx = async (wallet) => {
             .afterTime(startTime)
             .do();
     } catch (err) {
-        console.log({time: new Date()}, '\n', err);
+        console.log({message: 'Error loading response from indexer API', time: new Date()}, '\n', err);
         return null;
     }
     if (response) {
@@ -93,6 +108,9 @@ const getLatestWalletTx = async (wallet) => {
                     timestamp
                 });
             }
+        }
+        if (transactions.length < 1 && txs.length > 0) {
+            return { error: true };
         }
         return transactions[0];
     }

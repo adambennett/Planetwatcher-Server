@@ -12,7 +12,7 @@ module.exports = {
         unique: true
     },
     platform: {
-        type: Sequelize.ENUM('android', 'ios')
+        type: Sequelize.ENUM('android', 'ios', 'discord')
     },
     isEnabled: {
         type: Sequelize.BOOLEAN
@@ -25,5 +25,8 @@ module.exports = {
     },
     lastSent: {
         type: Sequelize.DATE
+    },
+    displayName: {
+        type: Sequelize.STRING
     }
 }

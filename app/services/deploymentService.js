@@ -30,7 +30,8 @@ const databaseAutodeploy = () => {
                 isEnabled: token.isEnabled,
                 sendStillConnected: token.sendStillConnected,
                 notificationInterval: token.notificationInterval,
-                lastSent: token.lastSent
+                lastSent: token.lastSent,
+                displayName: token.displayName
             });
         }
         return model.WalletWatch.findAll();

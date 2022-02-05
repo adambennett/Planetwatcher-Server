@@ -45,7 +45,7 @@ const generate = () => {
         dbPass = options && options.dbPass ? options.dbPass : '';
 
         // Create environment file with options above and all necessary defaults
-        const env = `# Server Settings\nPORT=${port}\nNOTIFICATIONS=true\nEXPRESS_SECRET=${expressSecret}\nGOOGLE_APPLICATION_CREDENTIALS=\n\n# DB Settings\nDB_DIALECT=postgres\nDB_HOST=${dbHost}\nDB_PORT=${dbPort}\nDB_NAME=${dbName}\nDB_USERNAME=${dbUser}\nDB_PASSWORD=${dbPass}\nDB_MODE=update    # switch to create to populate database automatically\n\n# Logger Settings\nLOG_LEVEL=debug\nSQL_LOG_LEVEL=debug\nLOG_TO_CONSOLE=false\nLOG_TO_CONSOLE_CONDENSED=true\nLOG_SQL_TO_CONSOLE=false\n\n# Algorand Settings\nPURESTAKE_API_URL=\nPURESTAKE_API_KEY=`;
+        const env = `# Server Settings\nPORT=${port}\nNOTIFICATIONS=true\nEXPRESS_SECRET=${expressSecret}\nGOOGLE_APPLICATION_CREDENTIALS=\n\n# DB Settings\nDB_DIALECT=postgres\nDB_HOST=${dbHost}\nDB_PORT=${dbPort}\nDB_NAME=${dbName}\nDB_USERNAME=${dbUser}\nDB_PASSWORD=${dbPass}\nDB_MODE=update    # switch to create to populate database automatically\n\n# Logger Settings\nLOG_LEVEL=debug\nSQL_LOG_LEVEL=debug\nLOG_TO_CONSOLE=false\nLOG_TO_CONSOLE_CONDENSED=true\nLOG_SQL_TO_CONSOLE=false\n\n# Algorand Settings\nPURESTAKE_API_URL=\nPURESTAKE_API_KEY=\n\n# Notification Settings\nNOTIFY_TYPE=Both\n\n# Discord Settings\nDISCORD_TOKEN=`;
 
         // Write to ../core/.env
         fs.writeFileSync(environmentPath, env);

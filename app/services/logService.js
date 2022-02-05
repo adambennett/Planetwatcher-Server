@@ -8,7 +8,7 @@ require('winston-daily-rotate-file');
 const logFormat = winston.format.printf(({ level, message, timestamp, notes, user, func, array, object, performance, isStartup}) => {
     const format = {
         level: level,
-        message: isStartup ? 'SampleVision started' : getStringFromUnknownObjectType(message),
+        message: isStartup ? 'PlanetWatcher-Server started' : getStringFromUnknownObjectType(message),
         notes: getStringFromUnknownObjectType(notes),
         stack: func,
         object: object != null ? object : null,
@@ -57,7 +57,7 @@ const logFormat = winston.format.printf(({ level, message, timestamp, notes, use
 });
 
 // Setup output formatting for SQL Query logs
-const queryFormat = winston.format.printf(({level, message, timestamp}) => {
+const queryFormat = winston.format.printf(({message, timestamp}) => {
     message = message.toString();
     message = message.split('"').join("'");
     const queryKey = (message.startsWith('Executing (default): DROP')) ? 'R' : (message.startsWith('Executing (default): CREATE')) ? 'C' : message.split('"').join('\'').substring(20, 22).trim();
